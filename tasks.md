@@ -7,4 +7,11 @@ usage:
 
 2. write test for the usage above ✅
 
-3. setup linter
+3. setup linter ✅
+
+
+
+
+============= devops
+- setup github
+- setup ci (test, linter)
