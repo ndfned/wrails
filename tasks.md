@@ -9,8 +9,24 @@ usage:
 
 3. setup linter ✅
 
+4. write micro framework functionality ✅
+so it works something like this:
+require 'lib'
+
+get '/' do
+  "Hello, world!"
+end
+
+get '/test' do
+  "<h1>Example</h1>"
+end
 
 
+
+============= later
+- figure out rack
+ - how to set it up?
+ - how to integrate it with puma?
 
 ============= devops
 - setup github
