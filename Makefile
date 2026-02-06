@@ -1,4 +1,4 @@
 test:
-	ruby test/app_test.rb
+	ruby test/wrails_test.rb
 
 .PHONY: test
