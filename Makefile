@@ -1,2 +1,4 @@
 test:
-	ruby test_app.rb
+	ruby test/app_test.rb
+
+.PHONY: test

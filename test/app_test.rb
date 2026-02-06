@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require_relative 'app'
+require_relative 'test_helper'
 
 class AppTest < Minitest::Test
   def test_routes
