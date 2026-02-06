@@ -1,13 +1,12 @@
 statuses: ✅ ⌛ ❌
 
-1. write simple ruby app ✅
-usage:
-- ruby app.rb /test -> <h1>Example</h1>
-- ruby app.rb /unknown -> <h1>Not Found</h1>
+6. routes storage
+- better way to store?
+- thread safe?
 
-2. write test for the usage above ✅
-
-3. setup linter ✅
+5. refactor app.rb ✅
+- reorganize files
+- make it more idiomatic (like minimal ruby lib)
 
 4. write micro framework functionality ✅
 so it works something like this:
@@ -21,9 +20,14 @@ get '/test' do
   "<h1>Example</h1>"
 end
 
-5. refactor app.rb ✅
-- reorganize files
-- make it more idiomatic (like minimal ruby lib)
+3. setup linter ✅
+
+2. write test for the usage above ✅
+
+1. write simple ruby app ✅
+usage:
+- ruby app.rb /test -> <h1>Example</h1>
+- ruby app.rb /unknown -> <h1>Not Found</h1>
 
 
 
