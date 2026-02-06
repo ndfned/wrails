@@ -21,8 +21,9 @@ get '/test' do
   "<h1>Example</h1>"
 end
 
-5. refactor app.rb
+5. refactor app.rb ✅
 - reorganize files
+- make it more idiomatic (like minimal ruby lib)
 
 
 
