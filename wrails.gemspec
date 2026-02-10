@@ -4,4 +4,5 @@ Gem::Specification.new do |spec|
   spec.summary     = 'Worse Rails'
   spec.files       = Dir['lib/**/*.rb']
   spec.require_paths = ['lib']
+  spec.author      = 'ndfnd'
 end
