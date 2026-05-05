@@ -1,6 +1,10 @@
-statuses: ✅ ⌛ ❌
+statuses: ✅ ⌛ ❌ 💡(backlog)
 
-6. routes storage
+7. add ability to open in browser 
+- check sinatra usage for examples
+- implement behavior so user is able to open response <h1>Hello world!</> in browser
+
+6. routes storage 💡
 - better way to store?
 - thread safe?
 
