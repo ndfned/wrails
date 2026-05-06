@@ -1,14 +1,27 @@
-statuses: ✅ ⌛ ❌ 🤔(implement later?)
+statuses: ✅ ⌛ ❌
 
-9. cascading routes, default cases (like 'not found') 🤔
+13. views/templates
+get '/' do
+  erb :index
+end 
+
+This renders views/index.erb
+
+12. add query support, like /path?theme=dark
+
+11. add params to routes, like /path/:id
+
+10. add support for other methods
+
+9. cascading routes, default cases (like 'not found')
 
 8. integrate with Rack ✅
 
-7. add ability to open in browser 
+7. add ability to open in browser ✅
 - check sinatra usage for examples
 - implement behavior so user is able to open response <h1>Hello world!</> in browser
 
-6. routes storage 🤔
+6. routes storage ❌
 - better way to store?
 - thread safe?
 
@@ -40,10 +53,14 @@ usage:
 
 
 ============= later
-- figure out rack
- - how to set it up?
- - how to integrate it with puma?
+- routes storage
+  - better way to store?
+  - thread safe?
 
 ============= devops
 - setup github
 - setup ci (test, linter)
+
+============= macro goals
+- implement micro framework functionality (like sinatra)
+- transition micro framework into fullblown framework (like rails)

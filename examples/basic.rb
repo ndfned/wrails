@@ -9,4 +9,16 @@ Wrails::Routes.get '/test' do
   'Hello, world!'
 end
 
+Wrails::Routes.get '/test/:name' do
+  "Hello #{params['name']}!"
+end
+
+Wrails::Routes.post '/' do
+  # create smth
+end
+
+Wrails::Routes.delete '/' do
+  # delete smth
+end
+
 Wrails.run!
