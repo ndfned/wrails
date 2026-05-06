@@ -7,17 +7,19 @@ module Wrails
     raise 'unsupported' unless method == 'get'
 
     handler = Wrails::Routes.routes[path]
-    raise 'no handler found' unless handler
+    return unless handler
 
     handler.call
   end
 
   def self.call(env)
-    [
-      200,
-      { 'Content-Type' => 'text/plain' },
-      ['Hello from my framework']
-    ]
+    result = handle_request(env['REQUEST_METHOD'].downcase, env['PATH_INFO'])
+
+    if result.nil?
+      [404, { 'Content-Type' => 'text/html' }, ['<h1>Not Found</h1>']]
+    else
+      [200, { 'Content-Type' => 'text/html' }, [result]]
+    end
   end
 
   def self.run!(port: 4567)

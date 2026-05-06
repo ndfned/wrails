@@ -1,10 +1,14 @@
-statuses: ✅ ⌛ ❌ 💡(backlog)
+statuses: ✅ ⌛ ❌ 🤔(implement later?)
+
+9. cascading routes, default cases (like 'not found') 🤔
+
+8. integrate with Rack ✅
 
 7. add ability to open in browser 
 - check sinatra usage for examples
 - implement behavior so user is able to open response <h1>Hello world!</> in browser
 
-6. routes storage 💡
+6. routes storage 🤔
 - better way to store?
 - thread safe?
 
