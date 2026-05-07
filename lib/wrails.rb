@@ -19,9 +19,9 @@ module Wrails
   end
 
   def self.handle_request(method, path)
-    raise 'unsupported' unless method == 'get'
+    raise 'unsupported' unless %w[get post].include?(method)
 
-    handler = Wrails::Routes.routes[path]
+    handler = Wrails::Routes.routes[path][method.to_sym]
     return unless handler
 
     context = RouteContext.new

@@ -1,14 +1,16 @@
 statuses: ✅ ⌛ ❌
 
+18. (rack) handle different status codes, content types, etc.
+
 17. add params passing to templates
 
-16. revisit tests ⌛
+16. revisit tests ✅
 
 15. routes order should matter
 
 14. remove puma dependency
 
-13. views/templates ⌛
+13. views/templates ✅
 get '/' do
   erb :index
 end 

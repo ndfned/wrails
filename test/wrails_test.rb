@@ -20,6 +20,10 @@ class WrailsTest < Minitest::Test
       erb :template1
     end
 
+    Wrails::Routes.post '/test' do
+      # create smth
+    end
+
     result = Wrails.handle_request('get', '/test')
     assert_equal '<h1>Example</h1>', result
 
@@ -28,5 +32,8 @@ class WrailsTest < Minitest::Test
 
     result = Wrails.handle_request('get', '/template1')
     assert_equal '<h1>Template1</h1>', result
+
+    result = Wrails.handle_request('post', '/test')
+    assert_nil result
   end
 end
