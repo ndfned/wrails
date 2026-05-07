@@ -1,6 +1,8 @@
 statuses: ✅ ⌛ ❌
 
-16. revisit tests
+17. add params passing to templates
+
+16. revisit tests ⌛
 
 15. routes order should matter
 

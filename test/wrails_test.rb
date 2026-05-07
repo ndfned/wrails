@@ -6,6 +6,8 @@ class WrailsTest < Minitest::Test
   end
 
   def test_routes
+    Wrails::Config.views_path = 'test/files/views'
+
     Wrails::Routes.get '/test' do
       '<h1>Example</h1>'
     end

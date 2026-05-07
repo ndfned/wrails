@@ -2,6 +2,8 @@ require_relative '../lib/wrails'
 require_relative '../lib/wrails/routes'
 require 'byebug'
 
+Wrails::Config.views_path = 'examples/views'
+
 Wrails::Routes.get '/' do
   'Home Page'
 end
