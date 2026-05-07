@@ -14,10 +14,17 @@ class WrailsTest < Minitest::Test
       '<h1>Not Found</h1>'
     end
 
+    Wrails::Routes.get '/template1' do
+      erb :template1
+    end
+
     result = Wrails.handle_request('get', '/test')
     assert_equal '<h1>Example</h1>', result
 
     result = Wrails.handle_request('get', '/other')
     assert_equal '<h1>Not Found</h1>', result
+
+    result = Wrails.handle_request('get', '/template1')
+    assert_equal '<h1>Template1</h1>', result
   end
 end

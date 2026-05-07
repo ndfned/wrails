@@ -1,5 +1,6 @@
 require_relative '../lib/wrails'
 require_relative '../lib/wrails/routes'
+require 'byebug'
 
 Wrails::Routes.get '/' do
   'Home Page'
@@ -13,12 +14,16 @@ Wrails::Routes.get '/test/:name' do
   "Hello #{params['name']}!"
 end
 
-Wrails::Routes.post '/' do
-  # create smth
+Wrails::Routes.get '/template1' do
+  erb :template1
 end
 
-Wrails::Routes.delete '/' do
-  # delete smth
-end
+# Wrails::Routes.post '/' do
+#   # create smth
+# end
+
+# Wrails::Routes.delete '/' do
+#   # delete smth
+# end
 
 Wrails.run!

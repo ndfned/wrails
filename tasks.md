@@ -1,6 +1,12 @@
 statuses: ✅ ⌛ ❌
 
-13. views/templates
+16. revisit tests
+
+15. routes order should matter
+
+14. remove puma dependency
+
+13. views/templates ⌛
 get '/' do
   erb :index
 end 

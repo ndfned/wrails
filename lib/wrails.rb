@@ -3,13 +3,20 @@ require 'puma'
 require_relative 'wrails/routes'
 
 module Wrails
+  class RouteContext
+    def erb(template_name)
+      File.read("views/#{template_name}")
+    end
+  end
+
   def self.handle_request(method, path)
     raise 'unsupported' unless method == 'get'
 
     handler = Wrails::Routes.routes[path]
     return unless handler
 
-    handler.call
+    context = RouteContext.new
+    context.instance_eval(&handler)
   end
 
   def self.call(env)
