@@ -13,7 +13,7 @@ class WrailsTest < Minitest::Test
     end
 
     Wrails::Routes.get '/other' do
-      '<h1>Not Found</h1>'
+      '<h1>Other</h1>'
     end
 
     Wrails::Routes.get '/template1' do
@@ -28,7 +28,10 @@ class WrailsTest < Minitest::Test
     assert_equal '<h1>Example</h1>', result
 
     result = Wrails.handle_request('get', '/other')
-    assert_equal '<h1>Not Found</h1>', result
+    assert_equal '<h1>Other</h1>', result
+
+    result = Wrails.handle_request('get', '/unexisiting')
+    assert_nil result
 
     result = Wrails.handle_request('get', '/template1')
     assert_equal '<h1>Template1</h1>', result

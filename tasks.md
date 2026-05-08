@@ -1,5 +1,8 @@
 statuses: ✅ ⌛ ❌
 
+focus:
+  - 11. add params to routes, like /path/:id
+
 18. (rack) handle different status codes, content types, etc.
 
 17. add params passing to templates
@@ -19,7 +22,7 @@ This renders views/index.erb
 
 12. add query support, like /path?theme=dark
 
-11. add params to routes, like /path/:id
+11. add params to routes, like /path/:id ⌛
 
 10. add support for other methods
 
