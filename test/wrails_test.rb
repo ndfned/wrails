@@ -49,7 +49,7 @@ class WrailsTest < Minitest::Test
 
   def test_get_request_with_dynamic_parameter
     Wrails::Routes.get '/test/:name' do |params|
-      "Hello #{params['name']}!"
+      "Hello #{params[:name]}!"
     end
 
     result = Wrails.handle_request('get', '/test/denis')

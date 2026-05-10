@@ -15,8 +15,8 @@ Wrails::Routes.get '/test' do
   'Hello, world!'
 end
 
-Wrails::Routes.get '/test/:name' do
-  "Hello #{params['name']}!"
+Wrails::Routes.get '/test/:name' do |params|
+  "Hello #{params[:name]}!"
 end
 
 Wrails::Routes.get '/template1' do

@@ -18,20 +18,62 @@ module Wrails
     end
   end
 
+  def self.route_match?(path1, path2)
+    segments1 = path1.split('/')
+    segments2 = path2.split('/')
+
+    return false unless segments1.size == segments2.size
+
+    segments1.zip(segments2).all? do |segment1, segment2|
+      segment1.start_with?(':') || segment1 == segment2
+    end
+  end
+
+  def self.parse_path_params(path_pattern, path)
+    path_patterns = path_pattern.split('/')
+    path_segments = path.split('/')
+
+    params = {}
+    path_patterns.each_with_index do |path_pattern, index|
+      next unless path_pattern.start_with?(':')
+
+      param_name = path_pattern[1..].to_sym
+      param_value = path_segments[index]
+      params[param_name] = param_value
+    end
+
+    params
+  end
+
+  def self.find_route(path, method)
+    Wrails::Routes.routes[method].each do |route_pattern, handler|
+      if route_match?(route_pattern, path)
+        return {
+          path: path,
+          handler: handler,
+          params: parse_path_params(route_pattern, path)
+        }
+      end
+    end
+
+    nil
+  end
+
   def self.handle_request(method, path)
     raise 'unsupported' unless %w[get post].include?(method)
 
     # TODO: should handle not found paths?
-    handler = Wrails::Routes.routes.dig(path, method.to_sym)
-    return unless handler
+    route = find_route(path, method.to_sym)
+    return unless route
 
     context = RouteContext.new
-    context.instance_eval(&handler)
+    context.instance_exec(route[:params], &route[:handler])
   end
 
   def self.call(env)
     result = handle_request(env['REQUEST_METHOD'].downcase, env['PATH_INFO'])
 
+    # TODO: fix hardcode
     if result.nil?
       [404, { 'Content-Type' => 'text/html' }, ['<h1>Not Found</h1>']]
     else
