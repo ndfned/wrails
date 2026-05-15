@@ -19,6 +19,12 @@ end
 This renders views/index.erb
 
 12. add query support, like /path?theme=dark
+get '/posts' do
+  # matches "GET /posts?title=foo&author=bar"
+  title = params[:title]
+  author = params[:author]
+  # uses title and author variables; query is optional to the /posts route
+end
 
 11. add params to routes, like /path/:id ✅
 

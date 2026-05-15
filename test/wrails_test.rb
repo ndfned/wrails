@@ -11,7 +11,7 @@ class WrailsTest < Minitest::Test
       '<h1>Example</h1>'
     end
 
-    result = Wrails.handle_request('get', '/test')
+    result = Wrails.handle_request(method: 'get', path: '/test')
     assert_equal '<h1>Example</h1>', result
   end
 
@@ -20,12 +20,12 @@ class WrailsTest < Minitest::Test
       '<h1>Other</h1>'
     end
 
-    result = Wrails.handle_request('get', '/other')
+    result = Wrails.handle_request(method: 'get', path: '/other')
     assert_equal '<h1>Other</h1>', result
   end
 
   def test_get_request_to_nonexisting_route
-    result = Wrails.handle_request('get', '/unexisiting')
+    result = Wrails.handle_request(method: 'get', path: '/unexisiting')
     assert_nil result
   end
 
@@ -34,7 +34,7 @@ class WrailsTest < Minitest::Test
       erb :template1
     end
 
-    result = Wrails.handle_request('get', '/template1')
+    result = Wrails.handle_request(method: 'get', path: '/template1')
     assert_equal '<h1>Template1</h1>', result
   end
 
@@ -43,7 +43,7 @@ class WrailsTest < Minitest::Test
       # create smth
     end
 
-    result = Wrails.handle_request('post', '/test')
+    result = Wrails.handle_request(method: 'post', path: '/test')
     assert_nil result
   end
 
@@ -52,7 +52,7 @@ class WrailsTest < Minitest::Test
       "Hello #{params[:name]}!"
     end
 
-    result = Wrails.handle_request('get', '/test/denis')
+    result = Wrails.handle_request(method: 'get', path: '/test/denis')
     assert_equal 'Hello denis!', result
   end
 
@@ -65,10 +65,23 @@ class WrailsTest < Minitest::Test
       # create smth
     end
 
-    get_result = Wrails.handle_request('get', '/test')
-    post_result = Wrails.handle_request('post', '/test')
+    get_result = Wrails.handle_request(method: 'get', path: '/test')
+    post_result = Wrails.handle_request(method: 'post', path: '/test')
 
     assert_equal '<h1>Example</h1>', get_result
     assert_nil post_result
+  end
+
+  def test_get_request_with_query_parameters
+    Wrails::Routes.get '/test' do |params|
+      "Hello #{params[:name]} #{params[:lastname]}!"
+    end
+
+    result = Wrails.handle_request(
+      method: 'get',
+      path: '/test',
+      query_params: { name: 'John', lastname: 'Doe' }
+    )
+    assert_equal 'Hello John Doe!', result
   end
 end

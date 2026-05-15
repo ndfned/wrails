@@ -59,7 +59,7 @@ module Wrails
     nil
   end
 
-  def self.handle_request(method, path)
+  def self.handle_request(method:, path:, query_params: nil)
     raise 'unsupported' unless %w[get post].include?(method)
 
     # TODO: should handle not found paths?
@@ -67,11 +67,27 @@ module Wrails
     return unless route
 
     context = RouteContext.new
-    context.instance_exec(route[:params], &route[:handler])
+
+    params = if query_params.nil?
+               route[:params]
+             else
+               # TODO: need to handle merge overwrite?
+               route[:params].merge(query_params)
+             end
+
+    context.instance_exec(params, &route[:handler])
   end
 
   def self.call(env)
-    result = handle_request(env['REQUEST_METHOD'].downcase, env['PATH_INFO'])
+    # TODO: what about nested params?
+    query_params = Rack::Utils.parse_query(env['QUERY_STRING'])
+    query_params.transform_keys!(&:to_sym)
+
+    result = handle_request(
+      method: env['REQUEST_METHOD'].downcase,
+      path: env['PATH_INFO'],
+      query_params: query_params
+    )
 
     # TODO: fix hardcode
     if result.nil?

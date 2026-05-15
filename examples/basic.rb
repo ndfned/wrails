@@ -15,6 +15,10 @@ Wrails::Routes.get '/test' do
   'Hello, world!'
 end
 
+Wrails::Routes.get '/test_qparams' do |params|
+  "Hello #{params[:name].capitalize} #{params[:lastname].capitalize}!"
+end
+
 Wrails::Routes.get '/test/:name' do |params|
   "Hello #{params[:name]}!"
 end
