@@ -1,12 +1,12 @@
 module Wrails
   module Routes
-    @routes = { get: {}, post: {} }
+    @routes = { get: {}, post: {}, put: {}, patch: {}, delete: {} }
 
     class << self
       attr_reader :routes
 
       def clear_routes!
-        @routes = { get: {}, post: {} }
+        @routes = { get: {}, post: {}, put: {}, patch: {}, delete: {} }
       end
 
       def get(path, &block)
@@ -15,6 +15,18 @@ module Wrails
 
       def post(path, &block)
         @routes[:post][path] = block
+      end
+
+      def put(path, &block)
+        @routes[:put][path] = block
+      end
+
+      def patch(path, &block)
+        @routes[:put][path] = block
+      end
+
+      def delete(path, &block)
+        @routes[:put][path] = block
       end
     end
   end

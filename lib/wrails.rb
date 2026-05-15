@@ -60,7 +60,7 @@ module Wrails
   end
 
   def self.handle_request(method:, path:, query_params: nil)
-    raise 'unsupported' unless %w[get post].include?(method)
+    raise 'unsupported' unless %w[get post put patch delete].include?(method)
 
     # TODO: should handle not found paths?
     route = find_route(path, method.to_sym)

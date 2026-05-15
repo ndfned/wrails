@@ -18,7 +18,7 @@ end
 
 This renders views/index.erb
 
-12. add query support, like /path?theme=dark
+12. add query support, like /path?theme=dark ✅
 get '/posts' do
   # matches "GET /posts?title=foo&author=bar"
   title = params[:title]
@@ -28,7 +28,7 @@ end
 
 11. add params to routes, like /path/:id ✅
 
-10. add support for other methods
+10. add support for other methods ✅
 
 9. cascading routes, default cases (like 'not found')
 

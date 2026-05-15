@@ -31,8 +31,16 @@ Wrails::Routes.post '/' do
   # create smth
 end
 
-# Wrails::Routes.delete '/' do
-#   # delete smth
-# end
+Wrails::Routes.put '/' do
+  # replace smth
+end
+
+Wrails::Routes.patch '/' do
+  # modify smth
+end
+
+Wrails::Routes.delete '/' do
+  # delete smth
+end
 
 Wrails.run!

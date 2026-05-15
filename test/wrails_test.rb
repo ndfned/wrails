@@ -47,6 +47,33 @@ class WrailsTest < Minitest::Test
     assert_nil result
   end
 
+  def test_put_request_to_existing_route
+    Wrails::Routes.put '/test' do
+      # replace smth
+    end
+
+    result = Wrails.handle_request(method: 'put', path: '/test')
+    assert_nil result
+  end
+
+  def test_patch_request_to_existing_route
+    Wrails::Routes.patch '/patch' do
+      # modify smth
+    end
+
+    result = Wrails.handle_request(method: 'patch', path: '/test')
+    assert_nil result
+  end
+
+  def test_delete_request_to_existing_route
+    Wrails::Routes.delete '/test' do
+      # delete smth
+    end
+
+    result = Wrails.handle_request(method: 'delete', path: '/test')
+    assert_nil result
+  end
+
   def test_get_request_with_dynamic_parameter
     Wrails::Routes.get '/test/:name' do |params|
       "Hello #{params[:name]}!"
