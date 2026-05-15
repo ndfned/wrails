@@ -7,9 +7,17 @@ statuses: ✅ ⌛ ❌
 
 16. revisit tests ✅
 
-15. routes order should matter
+15. routes order should matter ✅
+# BAD ORDER - This never matches :id routes
+get '/posts/new', to: 'posts#new'    # matches /posts/new
+get '/posts/:id', to: 'posts#show'   # /posts/1 works, but /posts/new? No!
 
-14. remove puma dependency
+# GOOD ORDER - Specific before dynamic
+get '/posts/new', to: 'posts#new'    # matches /posts/new first
+get '/posts/:id', to: 'posts#show'   # matches everything else
+get '/posts/:id/edit', to: 'posts#edit'  # Even more specific!
+
+14. remove puma dependency ❌
 
 13. views/templates ✅
 get '/' do
@@ -30,7 +38,7 @@ end
 
 10. add support for other methods ✅
 
-9. cascading routes, default cases (like 'not found')
+9. handle route case 'not found' ⌛
 
 8. integrate with Rack ✅
 
@@ -73,6 +81,8 @@ usage:
 - routes storage
   - better way to store?
   - thread safe?
+- remove puma dependency
+  - so it works like sinatra that doesnt require u to install puma
 
 ============= devops
 - setup github

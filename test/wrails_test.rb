@@ -111,4 +111,50 @@ class WrailsTest < Minitest::Test
     )
     assert_equal 'Hello John Doe!', result
   end
+
+  def test_dynamic_route_overwrite_static_first
+    Wrails::Routes.get '/test/new' do
+      '<h1>New Page</h1>'
+    end
+
+    Wrails::Routes.get '/test/:name' do |params|
+      "<h1>Hello #{params[:name]}!</h1>"
+    end
+
+    get_result1 = Wrails.handle_request(method: 'get', path: '/test/new')
+    assert_equal '<h1>New Page</h1>', get_result1
+
+    get_result2 = Wrails.handle_request(method: 'get', path: '/test/denis')
+    assert_equal '<h1>Hello denis!</h1>', get_result2
+  end
+
+  def test_routes_overwrite_dynamic_first
+    Wrails::Routes.get '/test/:name' do |params|
+      "<h1>Hello #{params[:name]}!</h1>"
+    end
+
+    # this route is unreacheable but it is expected
+    Wrails::Routes.get '/test/new' do
+      '<h1>New Page</h1>'
+    end
+
+    get_result1 = Wrails.handle_request(method: 'get', path: '/test/new')
+    assert_equal '<h1>Hello new!</h1>', get_result1
+
+    get_result2 = Wrails.handle_request(method: 'get', path: '/test/denis')
+    assert_equal '<h1>Hello denis!</h1>', get_result2
+  end
+
+  def test_routes_overwrite_two_statics
+    Wrails::Routes.get '/test/new' do
+      '<h1>New Page</h1>'
+    end
+
+    Wrails::Routes.get '/test/new' do
+      '<h1>Test Page</h1>'
+    end
+
+    get_result = Wrails.handle_request(method: 'get', path: '/test/new')
+    assert_equal '<h1>Test Page</h1>', get_result
+  end
 end
