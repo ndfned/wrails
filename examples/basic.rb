@@ -24,7 +24,7 @@ Wrails::Routes.get '/test/:name' do |params|
 end
 
 Wrails::Routes.get '/template1' do
-  erb :template1
+  erb :template1, locals: { name: 'John' }
 end
 
 Wrails::Routes.post '/' do

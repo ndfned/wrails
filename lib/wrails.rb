@@ -1,11 +1,13 @@
-require 'rack'
+require 'erb'
 require 'puma'
+require 'rack'
+
 require_relative 'wrails/routes'
 require_relative 'wrails/config'
 
 module Wrails
   class RouteContext
-    def erb(template_name)
+    def erb(template_name, locals: {})
       template_name = "#{template_name}.erb"
 
       path = if Config.views_path
@@ -14,7 +16,8 @@ module Wrails
                "views/#{template_name}"
              end
 
-      File.read(path)
+      template = File.read(path)
+      ERB.new(template, trim_mode: '-').result_with_hash(locals)
     end
   end
 

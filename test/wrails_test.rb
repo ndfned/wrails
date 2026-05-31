@@ -47,7 +47,20 @@ class WrailsTest < Minitest::Test
     end
 
     result = Wrails.handle_request(method: 'get', path: '/template1')
-    assert_body '<h1>Template1</h1>', result
+
+    assert_includes body_from(result), '<h1>Template1</h1>'
+    assert_includes body_from(result), 'Hello guest'
+  end
+
+  def test_get_request_that_renders_template_with_param
+    Wrails::Routes.get '/template1' do
+      erb :template1, locals: { name: 'John' }
+    end
+
+    result = Wrails.handle_request(method: 'get', path: '/template1')
+
+    assert_includes body_from(result), '<h1>Template1</h1>'
+    assert_includes body_from(result), 'Hello John'
   end
 
   def test_post_request_to_existing_route

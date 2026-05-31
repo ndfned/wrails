@@ -1,1 +1,7 @@
 <h1>Template1</h1>
+
+<% if defined?(name) && name %>
+  <p>Hello <%= name %></p>
+<% else %>
+  <p>Hello guest</p>
+<% end %>

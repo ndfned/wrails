@@ -5,7 +5,7 @@ statuses: ✅ ⌛ ❌
 
 18. (rack) handle different status codes, content types, etc.
 
-17. add params passing to templates
+17. add params passing to templates ✅
 
 16. revisit tests ✅
 
