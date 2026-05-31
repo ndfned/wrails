@@ -62,9 +62,10 @@ module Wrails
   def self.handle_request(method:, path:, query_params: nil)
     raise 'unsupported' unless %w[get post put patch delete].include?(method)
 
-    # TODO: should handle not found paths?
     route = find_route(path, method.to_sym)
-    return unless route
+    if route.nil?
+      return [404, { 'Content-Type' => 'text/html' }, ['<h1>Not Found</h1>']]
+    end
 
     context = RouteContext.new
 
@@ -75,7 +76,10 @@ module Wrails
                route[:params].merge(query_params)
              end
 
-    context.instance_exec(params, &route[:handler])
+    result = context.instance_exec(params, &route[:handler])
+    raise 'bad result' unless result.is_a?(String) || result.nil?
+
+    [200, { 'Content-Type' => 'text/html' }, [result]]
   end
 
   def self.call(env)
@@ -83,18 +87,10 @@ module Wrails
     query_params = Rack::Utils.parse_query(env['QUERY_STRING'])
     query_params.transform_keys!(&:to_sym)
 
-    result = handle_request(
-      method: env['REQUEST_METHOD'].downcase,
-      path: env['PATH_INFO'],
-      query_params: query_params
-    )
+    method = env['REQUEST_METHOD'].downcase
+    path = env['PATH_INFO']
 
-    # TODO: fix hardcode
-    if result.nil?
-      [404, { 'Content-Type' => 'text/html' }, ['<h1>Not Found</h1>']]
-    else
-      [200, { 'Content-Type' => 'text/html' }, [result]]
-    end
+    handle_request(method:, path:, query_params:)
   end
 
   def self.run!(port: 4567)

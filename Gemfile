@@ -1,7 +1,13 @@
 source 'https://rubygems.org'
 
+gem 'puma'
+gem 'rack'
+
 group :development, :test do
   gem 'byebug'
+  gem 'minitest'
 end
 
-gem 'rubocop', '~> 1.84', group: :development
+group :development do
+  gem 'rubocop', '~> 1.84'
+end

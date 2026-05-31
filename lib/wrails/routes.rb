@@ -22,11 +22,11 @@ module Wrails
       end
 
       def patch(path, &block)
-        @routes[:put][path] = block
+        @routes[:patch][path] = block
       end
 
       def delete(path, &block)
-        @routes[:put][path] = block
+        @routes[:delete][path] = block
       end
     end
   end

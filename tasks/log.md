@@ -1,6 +1,8 @@
 statuses: ✅ ⌛ ❌
 
 
+19. user should be able to change status
+
 18. (rack) handle different status codes, content types, etc.
 
 17. add params passing to templates
@@ -38,7 +40,7 @@ end
 
 10. add support for other methods ✅
 
-9. handle route case 'not found' ⌛
+9. handle route case 'not found' ✅
 
 8. integrate with Rack ✅
 
