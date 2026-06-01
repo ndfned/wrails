@@ -1,9 +1,16 @@
 statuses: ✅ ⌛ ❌
 
 
-19. user should be able to change status
+20. allow user to use response object
+get "/test" do
+  response.status = 404
+  response["X-Test"] = "123"
+  "OK"
+end
 
-18. (rack) handle different status codes, content types, etc.
+19. user should be able to change status ✅
+
+18. (rack) handle different status codes, content types, etc. ✅
 
 17. add params passing to templates ✅
 

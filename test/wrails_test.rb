@@ -10,8 +10,16 @@ class WrailsTest < Minitest::Test
     result.is_a?(Array) ? result[2][0] : result
   end
 
+  def code_from(result)
+    result.is_a?(Array) ? result[0] : result
+  end
+
   def assert_body(expected, result)
     assert_equal expected, body_from(result)
+  end
+
+  def assert_code(expected, result)
+    assert_equal expected, code_from(result)
   end
 
   def assert_body_nil(result)
@@ -106,6 +114,32 @@ class WrailsTest < Minitest::Test
 
     result = Wrails.handle_request(method: 'get', path: '/test/denis')
     assert_body 'Hello denis!', result
+  end
+
+  def test_get_request_with_different_http_code
+    Wrails::Routes.get '/not_found' do |params|
+      if params[:name].nil?
+        ['Not found', 404]
+      else
+        "Hello #{params[:name]}!"
+      end
+    end
+
+    result = Wrails.handle_request(
+      method: 'get',
+      path: '/not_found'
+    )
+    assert_body 'Not found', result
+    assert_code 404, result
+
+    result = Wrails.handle_request(
+      method: 'get',
+      path: '/not_found',
+      query_params: { name: 'John' }
+    )
+
+    assert_body 'Hello John!', result
+    assert_code 200, result
   end
 
   def test_multiple_routes_with_different_methods_to_same_path

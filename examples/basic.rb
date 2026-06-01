@@ -23,6 +23,14 @@ Wrails::Routes.get '/test/:name' do |params|
   "Hello #{params[:name]}!"
 end
 
+Wrails::Routes.get '/not_found' do |params|
+  if params[:name].nil?
+    ['Not found', 404]
+  else
+    "Hello #{params[:name]}!"
+  end
+end
+
 Wrails::Routes.get '/template1' do
   erb :template1, locals: { name: 'John' }
 end

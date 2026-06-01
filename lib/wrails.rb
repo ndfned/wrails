@@ -80,9 +80,20 @@ module Wrails
              end
 
     result = context.instance_exec(params, &route[:handler])
-    raise 'bad result' unless result.is_a?(String) || result.nil?
 
-    [200, { 'Content-Type' => 'text/html' }, [result]]
+    code = 200
+    body = nil
+
+    if result.is_a?(Array)
+      body, code = result
+      raise 'bad result' unless body.is_a?(String) && code.is_a?(Numeric)
+    elsif result.is_a?(String) || result.nil?
+      body = result
+    else
+      raise 'bad result'
+    end
+
+    [code, { 'Content-Type' => 'text/html' }, [body]]
   end
 
   def self.call(env)
