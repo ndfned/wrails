@@ -23,6 +23,15 @@ class WrailsTest < Minitest::Test
     assert_status 302, response
   end
 
+  def assert_content_type(type)
+    assert_status type, response.content_type
+  end
+
+  def assert_json(hash, response)
+    assert_equal 'application/json', response.headers['Content-Type']
+    assert_body hash.to_json, response
+  end
+
   def test_get_request_to_existing_route
     Wrails::Routes.get '/test' do
       '<h1>Example</h1>'
@@ -233,5 +242,16 @@ class WrailsTest < Minitest::Test
 
     response = Wrails.handle_request(method: 'get', path: '/test')
     assert_redirect response
+  end
+
+  def test_content_type
+    Wrails::Routes.get '/test' do
+      content_type :json
+
+      { message: 'ok' }.to_json
+    end
+
+    response = Wrails.handle_request(method: 'get', path: '/test')
+    assert_json ({ message: 'ok' }), response
   end
 end

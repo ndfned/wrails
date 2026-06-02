@@ -34,6 +34,18 @@ module Wrails
       nil
     end
 
+    def content_type(type)
+      raw_type = if type == :json
+                   'application/json'
+                 else
+                   "unknown content_type: #{type}"
+                 end
+
+      @response.headers['Content-Type'] = raw_type
+
+      nil
+    end
+
     def erb(template_name, locals: {})
       template_name = "#{template_name}.erb"
 

@@ -1,9 +1,11 @@
 # ruby examples/basic.rb
 # open http://localhost:4567
 
+require 'byebug'
+require 'json'
+
 require_relative '../lib/wrails'
 require_relative '../lib/wrails/routes'
-require 'byebug'
 
 Wrails::Config.views_path = 'examples/views'
 
@@ -34,6 +36,12 @@ end
 
 Wrails::Routes.get '/redirect' do
   redirect '/'
+end
+
+Wrails::Routes.get '/json' do
+  content_type :json
+
+  { message: 'ok' }.to_json
 end
 
 Wrails::Routes.get '/template1' do
