@@ -6,24 +6,16 @@ class WrailsTest < Minitest::Test
     Wrails::Config.views_path = 'test/files/views'
   end
 
-  def body_from(result)
-    result.is_a?(Array) ? result[2][0] : result
+  def assert_body(expected, response)
+    assert_equal expected, response.body
   end
 
-  def status_from(result)
-    result.is_a?(Array) ? result[0] : result
+  def assert_status(expected, response)
+    assert_equal expected, response.status
   end
 
-  def assert_body(expected, result)
-    assert_equal expected, body_from(result)
-  end
-
-  def assert_status(expected, result)
-    assert_equal expected, status_from(result)
-  end
-
-  def assert_body_nil(result)
-    assert_nil body_from(result)
+  def assert_body_nil(response)
+    assert_nil response.body
   end
 
   def test_get_request_to_existing_route
@@ -31,8 +23,8 @@ class WrailsTest < Minitest::Test
       '<h1>Example</h1>'
     end
 
-    result = Wrails.handle_request(method: 'get', path: '/test')
-    assert_body '<h1>Example</h1>', result
+    response = Wrails.handle_request(method: 'get', path: '/test')
+    assert_body '<h1>Example</h1>', response
   end
 
   def test_get_request_to_another_existing_route
@@ -40,13 +32,13 @@ class WrailsTest < Minitest::Test
       '<h1>Other</h1>'
     end
 
-    result = Wrails.handle_request(method: 'get', path: '/other')
-    assert_body '<h1>Other</h1>', result
+    response = Wrails.handle_request(method: 'get', path: '/other')
+    assert_body '<h1>Other</h1>', response
   end
 
   def test_get_request_to_nonexisting_route
-    result = Wrails.handle_request(method: 'get', path: '/unexisiting')
-    assert_body '<h1>Not Found</h1>', result
+    response = Wrails.handle_request(method: 'get', path: '/unexisiting')
+    assert_body '<h1>Not Found</h1>', response
   end
 
   def test_get_request_that_renders_template
@@ -54,10 +46,10 @@ class WrailsTest < Minitest::Test
       erb :template1
     end
 
-    result = Wrails.handle_request(method: 'get', path: '/template1')
+    response = Wrails.handle_request(method: 'get', path: '/template1')
 
-    assert_includes body_from(result), '<h1>Template1</h1>'
-    assert_includes body_from(result), 'Hello guest'
+    assert_includes response.body, '<h1>Template1</h1>'
+    assert_includes response.body, 'Hello guest'
   end
 
   def test_get_request_that_renders_template_with_param
@@ -65,10 +57,10 @@ class WrailsTest < Minitest::Test
       erb :template1, locals: { name: 'John' }
     end
 
-    result = Wrails.handle_request(method: 'get', path: '/template1')
+    response = Wrails.handle_request(method: 'get', path: '/template1')
 
-    assert_includes body_from(result), '<h1>Template1</h1>'
-    assert_includes body_from(result), 'Hello John'
+    assert_includes response.body, '<h1>Template1</h1>'
+    assert_includes response.body, 'Hello John'
   end
 
   def test_post_request_to_existing_route
@@ -76,8 +68,8 @@ class WrailsTest < Minitest::Test
       # create smth
     end
 
-    result = Wrails.handle_request(method: 'post', path: '/test')
-    assert_body_nil result
+    response = Wrails.handle_request(method: 'post', path: '/test')
+    assert_body_nil response
   end
 
   def test_put_request_to_existing_route
@@ -85,8 +77,8 @@ class WrailsTest < Minitest::Test
       # replace smth
     end
 
-    result = Wrails.handle_request(method: 'put', path: '/test')
-    assert_body_nil result
+    response = Wrails.handle_request(method: 'put', path: '/test')
+    assert_body_nil response
   end
 
   def test_patch_request_to_existing_route
@@ -94,8 +86,8 @@ class WrailsTest < Minitest::Test
       # replace smth
     end
 
-    result = Wrails.handle_request(method: 'patch', path: '/test')
-    assert_body_nil result
+    response = Wrails.handle_request(method: 'patch', path: '/test')
+    assert_body_nil response
   end
 
   def test_delete_request_to_existing_route
@@ -103,8 +95,8 @@ class WrailsTest < Minitest::Test
       # delete smth
     end
 
-    result = Wrails.handle_request(method: 'delete', path: '/test')
-    assert_body_nil result
+    response = Wrails.handle_request(method: 'delete', path: '/test')
+    assert_body_nil response
   end
 
   def test_get_request_with_dynamic_parameter
@@ -112,8 +104,8 @@ class WrailsTest < Minitest::Test
       "Hello #{params[:name]}!"
     end
 
-    result = Wrails.handle_request(method: 'get', path: '/test/denis')
-    assert_body 'Hello denis!', result
+    response = Wrails.handle_request(method: 'get', path: '/test/denis')
+    assert_body 'Hello denis!', response
   end
 
   def test_get_request_with_different_http_code
@@ -126,21 +118,21 @@ class WrailsTest < Minitest::Test
       end
     end
 
-    result = Wrails.handle_request(
+    response = Wrails.handle_request(
       method: 'get',
       path: '/not_found'
     )
-    assert_body 'Not found', result
-    assert_status 404, result
+    assert_body 'Not found', response
+    assert_status 404, response
 
-    result = Wrails.handle_request(
+    response = Wrails.handle_request(
       method: 'get',
       path: '/not_found',
       query_params: { name: 'John' }
     )
 
-    assert_body 'Hello John!', result
-    assert_status 200, result
+    assert_body 'Hello John!', response
+    assert_status 200, response
   end
 
   def test_multiple_routes_with_different_methods_to_same_path
@@ -152,11 +144,11 @@ class WrailsTest < Minitest::Test
       # create smth
     end
 
-    get_result = Wrails.handle_request(method: 'get', path: '/test')
-    post_result = Wrails.handle_request(method: 'post', path: '/test')
+    get_response = Wrails.handle_request(method: 'get', path: '/test')
+    post_response = Wrails.handle_request(method: 'post', path: '/test')
 
-    assert_body '<h1>Example</h1>', get_result
-    assert_body_nil post_result
+    assert_body '<h1>Example</h1>', get_response
+    assert_body_nil post_response
   end
 
   def test_get_request_with_query_parameters
@@ -164,12 +156,12 @@ class WrailsTest < Minitest::Test
       "Hello #{params[:name]} #{params[:lastname]}!"
     end
 
-    result = Wrails.handle_request(
+    response = Wrails.handle_request(
       method: 'get',
       path: '/test',
       query_params: { name: 'John', lastname: 'Doe' }
     )
-    assert_body 'Hello John Doe!', result
+    assert_body 'Hello John Doe!', response
   end
 
   def test_dynamic_route_overwrite_static_first
@@ -181,11 +173,11 @@ class WrailsTest < Minitest::Test
       "<h1>Hello #{params[:name]}!</h1>"
     end
 
-    get_result1 = Wrails.handle_request(method: 'get', path: '/test/new')
-    assert_body '<h1>New Page</h1>', get_result1
+    get_response1 = Wrails.handle_request(method: 'get', path: '/test/new')
+    assert_body '<h1>New Page</h1>', get_response1
 
-    get_result2 = Wrails.handle_request(method: 'get', path: '/test/denis')
-    assert_body '<h1>Hello denis!</h1>', get_result2
+    get_response2 = Wrails.handle_request(method: 'get', path: '/test/denis')
+    assert_body '<h1>Hello denis!</h1>', get_response2
   end
 
   def test_routes_overwrite_dynamic_first
@@ -198,11 +190,11 @@ class WrailsTest < Minitest::Test
       '<h1>New Page</h1>'
     end
 
-    get_result1 = Wrails.handle_request(method: 'get', path: '/test/new')
-    assert_body '<h1>Hello new!</h1>', get_result1
+    get_response1 = Wrails.handle_request(method: 'get', path: '/test/new')
+    assert_body '<h1>Hello new!</h1>', get_response1
 
-    get_result2 = Wrails.handle_request(method: 'get', path: '/test/denis')
-    assert_body '<h1>Hello denis!</h1>', get_result2
+    get_response2 = Wrails.handle_request(method: 'get', path: '/test/denis')
+    assert_body '<h1>Hello denis!</h1>', get_response2
   end
 
   def test_routes_overwrite_two_statics
@@ -214,8 +206,8 @@ class WrailsTest < Minitest::Test
       '<h1>Test Page</h1>'
     end
 
-    get_result = Wrails.handle_request(method: 'get', path: '/test/new')
-    assert_body '<h1>Test Page</h1>', get_result
+    response = Wrails.handle_request(method: 'get', path: '/test/new')
+    assert_body '<h1>Test Page</h1>', response
   end
 
   def test_response_modification

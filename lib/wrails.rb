@@ -7,10 +7,16 @@ require_relative 'wrails/config'
 
 module Wrails
   class Response
-    attr_accessor :status
+    attr_accessor :status, :headers, :body
 
-    def initialize(status:)
+    def initialize(status:, headers:, body:)
       @status = status
+      @headers = headers
+      @body = body
+    end
+
+    def to_rack
+      [status, headers, [body]]
     end
   end
 
@@ -80,26 +86,34 @@ module Wrails
     raise 'unsupported' unless %w[get post put patch delete].include?(method)
 
     route = find_route(path, method.to_sym)
+
+    response = Response.new(
+      status: 200,
+      body: nil,
+      headers: { 'Content-Type' => 'text/html' }
+    )
+
     if route.nil?
-      return [404, { 'Content-Type' => 'text/html' }, ['<h1>Not Found</h1>']]
+      response.status = 404
+      response.body = '<h1>Not Found</h1>'
+      return response
     end
 
+    context = RouteContext.new(response)
     params = if query_params.nil?
                route[:params]
              else
                # TODO: need to handle merge overwrite?
                route[:params].merge(query_params)
              end
-
-    response = Response.new(status: 200)
-    context = RouteContext.new(response)
-    result = context.instance_exec(params, &route[:handler])
-
-    unless result.is_a?(String) || result.nil?
-      raise 'bad result'
+    body = context.instance_exec(params, &route[:handler])
+    if body.is_a?(String) || body.nil?
+      response.body = body
+    else
+      raise 'invalid body value'
     end
 
-    [response.status, { 'Content-Type' => 'text/html' }, [result]]
+    response
   end
 
   def self.call(env)
@@ -110,7 +124,8 @@ module Wrails
     method = env['REQUEST_METHOD'].downcase
     path = env['PATH_INFO']
 
-    handle_request(method:, path:, query_params:)
+    response = handle_request(method:, path:, query_params:)
+    response.to_rack
   end
 
   def self.run!(port: 4567)

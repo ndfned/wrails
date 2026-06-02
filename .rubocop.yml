@@ -9,3 +9,6 @@ Style/Next:
 
 Style/IfUnlessModifier:
   Enabled: false
+
+Style/GuardClause:
+  Enabled: false

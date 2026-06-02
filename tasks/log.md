@@ -1,6 +1,14 @@
 statuses: ✅ ⌛ ❌
 
-21. make handle_request return response object?
+
+23. make request object
+
+22. add manipulations with the reseponse object:
+  - response["X-Test"] = "123"
+  - content_type :json
+  - redirect "/login"
+
+21. make handle_request return response object? ✅
 
 20. allow user to use response object ✅
 get "/test" do
