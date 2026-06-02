@@ -25,7 +25,8 @@ end
 
 Wrails::Routes.get '/not_found' do |params|
   if params[:name].nil?
-    ['Not found', 404]
+    response.status = 404
+    'Not found'
   else
     "Hello #{params[:name]}!"
   end

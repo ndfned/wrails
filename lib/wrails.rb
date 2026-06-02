@@ -6,7 +6,21 @@ require_relative 'wrails/routes'
 require_relative 'wrails/config'
 
 module Wrails
+  class Response
+    attr_accessor :status
+
+    def initialize(status:)
+      @status = status
+    end
+  end
+
   class RouteContext
+    attr_reader :response
+
+    def initialize(response)
+      @response = response
+    end
+
     def erb(template_name, locals: {})
       template_name = "#{template_name}.erb"
 
@@ -70,8 +84,6 @@ module Wrails
       return [404, { 'Content-Type' => 'text/html' }, ['<h1>Not Found</h1>']]
     end
 
-    context = RouteContext.new
-
     params = if query_params.nil?
                route[:params]
              else
@@ -79,21 +91,15 @@ module Wrails
                route[:params].merge(query_params)
              end
 
+    response = Response.new(status: 200)
+    context = RouteContext.new(response)
     result = context.instance_exec(params, &route[:handler])
 
-    code = 200
-    body = nil
-
-    if result.is_a?(Array)
-      body, code = result
-      raise 'bad result' unless body.is_a?(String) && code.is_a?(Numeric)
-    elsif result.is_a?(String) || result.nil?
-      body = result
-    else
+    unless result.is_a?(String) || result.nil?
       raise 'bad result'
     end
 
-    [code, { 'Content-Type' => 'text/html' }, [body]]
+    [response.status, { 'Content-Type' => 'text/html' }, [result]]
   end
 
   def self.call(env)

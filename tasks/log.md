@@ -1,7 +1,8 @@
 statuses: ✅ ⌛ ❌
 
+21. make handle_request return response object?
 
-20. allow user to use response object
+20. allow user to use response object ✅
 get "/test" do
   response.status = 404
   response["X-Test"] = "123"
