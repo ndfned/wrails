@@ -32,6 +32,14 @@ class WrailsTest < Minitest::Test
     assert_body hash.to_json, response
   end
 
+  def assert_header(key, value, response)
+    assert_equal value, response.headers[key]
+  end
+
+  def assert_header_nil(key, response)
+    assert_nil response.headers[key]
+  end
+
   def test_get_request_to_existing_route
     Wrails::Routes.get '/test' do
       '<h1>Example</h1>'
@@ -253,5 +261,31 @@ class WrailsTest < Minitest::Test
 
     response = Wrails.handle_request(method: 'get', path: '/test')
     assert_json ({ message: 'ok' }), response
+  end
+
+  def test_custom_headers
+    Wrails::Routes.get '/test' do
+      headers 'X-Test', '123'
+
+      'ok'
+    end
+
+    response = Wrails.handle_request(method: 'get', path: '/test')
+
+    assert_body 'ok', response
+    assert_header 'X-Test', '123', response
+  end
+
+  def test_direct_access_to_headers
+    Wrails::Routes.get '/test' do
+      response.headers['X-Test'] = '123'
+
+      'ok'
+    end
+
+    response = Wrails.handle_request(method: 'get', path: '/test')
+
+    assert_body 'ok', response
+    assert_header_nil 'X-Test', response
   end
 end

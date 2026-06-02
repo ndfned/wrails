@@ -44,6 +44,12 @@ Wrails::Routes.get '/json' do
   { message: 'ok' }.to_json
 end
 
+Wrails::Routes.get '/headers' do
+  headers 'X-Test', '123'
+
+  'ok'
+end
+
 Wrails::Routes.get '/template1' do
   erb :template1, locals: { name: 'John' }
 end

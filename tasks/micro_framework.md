@@ -2,9 +2,9 @@ What needs to be done to use this app as a microframework?
 
 Macros:
   - should include all essential features (TODO: list essentials somewhere)
-  - global refactoring after features done: app as a whole, how is it structured? (main learning point)
   - should be packaged as a gem
   - gem should require no extra dependencies
+  - global refactoring after features done: app as a whole, how is it structured? (main learning point) (can be done later, after gem is packaged)
 
 
 Essential features (pseudocode):

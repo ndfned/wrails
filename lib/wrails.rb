@@ -7,7 +7,7 @@ require_relative 'wrails/config'
 
 module Wrails
   class Response
-    attr_accessor :status, :headers, :body
+    attr_accessor :status, :body
 
     def initialize(status:, headers:, body:)
       @status = status
@@ -15,8 +15,16 @@ module Wrails
       @body = body
     end
 
+    def headers
+      @headers.dup
+    end
+
+    def set_header(key, value)
+      @headers[key.to_s] = value
+    end
+
     def to_rack
-      [status, headers, [body]]
+      [@status, @headers, [@body]]
     end
   end
 
@@ -29,7 +37,7 @@ module Wrails
 
     def redirect(to)
       @response.status = 302
-      @response.headers['Location'] = to
+      @response.set_header('Location', to)
 
       nil
     end
@@ -41,7 +49,13 @@ module Wrails
                    "unknown content_type: #{type}"
                  end
 
-      @response.headers['Content-Type'] = raw_type
+      @response.set_header('Content-Type', raw_type)
+
+      nil
+    end
+
+    def headers(key, value)
+      @response.set_header(key, value)
 
       nil
     end
