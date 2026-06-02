@@ -18,6 +18,11 @@ class WrailsTest < Minitest::Test
     assert_nil response.body
   end
 
+  def assert_redirect(response)
+    assert_body_nil response
+    assert_status 302, response
+  end
+
   def test_get_request_to_existing_route
     Wrails::Routes.get '/test' do
       '<h1>Example</h1>'
@@ -219,5 +224,14 @@ class WrailsTest < Minitest::Test
     response = Wrails.handle_request(method: 'get', path: '/test')
     assert_body 'OK', response
     assert_status 404, response
+  end
+
+  def test_redirect
+    Wrails::Routes.get '/test' do
+      redirect 'login'
+    end
+
+    response = Wrails.handle_request(method: 'get', path: '/test')
+    assert_redirect response
   end
 end

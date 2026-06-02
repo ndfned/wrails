@@ -32,6 +32,10 @@ Wrails::Routes.get '/not_found' do |params|
   end
 end
 
+Wrails::Routes.get '/redirect' do
+  redirect '/'
+end
+
 Wrails::Routes.get '/template1' do
   erb :template1, locals: { name: 'John' }
 end

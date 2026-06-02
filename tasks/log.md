@@ -6,7 +6,7 @@ statuses: ✅ ⌛ ❌
 22. add manipulations with the reseponse object:
   - response["X-Test"] = "123"
   - content_type :json
-  - redirect "/login"
+  - redirect "/login" ⌛
 
 21. make handle_request return response object? ✅
 

@@ -27,6 +27,13 @@ module Wrails
       @response = response
     end
 
+    def redirect(to)
+      @response.status = 302
+      @response.headers['Location'] = to
+
+      nil
+    end
+
     def erb(template_name, locals: {})
       template_name = "#{template_name}.erb"
 
