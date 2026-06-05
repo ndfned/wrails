@@ -1,7 +1,7 @@
 statuses: ✅ ⌛ ❌
 
 
-23. make request object
+23. make request object ⌛
 
 22. add manipulations with the reseponse object:
   - headers["X-Test"] = "123" ✅

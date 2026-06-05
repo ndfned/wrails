@@ -45,7 +45,7 @@ class WrailsTest < Minitest::Test
       '<h1>Example</h1>'
     end
 
-    response = Wrails.handle_request(method: 'get', path: '/test')
+    response = Wrails.call(Rack::MockRequest.env_for('/test', method: 'GET'))
     assert_body '<h1>Example</h1>', response
   end
 
@@ -54,12 +54,12 @@ class WrailsTest < Minitest::Test
       '<h1>Other</h1>'
     end
 
-    response = Wrails.handle_request(method: 'get', path: '/other')
+    response = Wrails.call(Rack::MockRequest.env_for('/other', method: 'GET'))
     assert_body '<h1>Other</h1>', response
   end
 
   def test_get_request_to_nonexisting_route
-    response = Wrails.handle_request(method: 'get', path: '/unexisiting')
+    response = Wrails.call(Rack::MockRequest.env_for('/unexisting', method: 'GET'))
     assert_body '<h1>Not Found</h1>', response
   end
 

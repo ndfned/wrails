@@ -6,6 +6,24 @@ require_relative 'wrails/routes'
 require_relative 'wrails/config'
 
 module Wrails
+  class Request
+    def initialize(env)
+      @rack_request = Rack::Request.new(env)
+    end
+
+    def request_method
+      @rack_request.request_method.downcase.to_sym
+    end
+
+    def path
+      @rack_request.path
+    end
+
+    def params
+      @rack_request.params.transform_keys(&:to_sym)
+    end
+  end
+
   class Response
     attr_accessor :status, :body
 
@@ -23,7 +41,7 @@ module Wrails
       @headers[key.to_s] = value
     end
 
-    def to_rack
+    def to_ary
       [@status, @headers, [@body]]
     end
   end
@@ -115,10 +133,10 @@ module Wrails
     nil
   end
 
-  def self.handle_request(method:, path:, query_params: nil)
-    raise 'unsupported' unless %w[get post put patch delete].include?(method)
+  def self.handle_request(request)
+    raise 'unsupported' unless %i[get post put patch delete].include?(request.request_method)
 
-    route = find_route(path, method.to_sym)
+    route = find_route(request.path, request.request_method)
 
     response = Response.new(
       status: 200,
@@ -133,11 +151,11 @@ module Wrails
     end
 
     context = RouteContext.new(response)
-    params = if query_params.nil?
+    params = if request.params.nil?
                route[:params]
              else
                # TODO: need to handle merge overwrite?
-               route[:params].merge(query_params)
+               route[:params].merge(request.params)
              end
     body = context.instance_exec(params, &route[:handler])
     if body.is_a?(String) || body.nil?
@@ -150,15 +168,7 @@ module Wrails
   end
 
   def self.call(env)
-    # TODO: what about nested params?
-    query_params = Rack::Utils.parse_query(env['QUERY_STRING'])
-    query_params.transform_keys!(&:to_sym)
-
-    method = env['REQUEST_METHOD'].downcase
-    path = env['PATH_INFO']
-
-    response = handle_request(method:, path:, query_params:)
-    response.to_rack
+    handle_request(Request.new(env))
   end
 
   def self.run!(port: 4567)
