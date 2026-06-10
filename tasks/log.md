@@ -1,7 +1,9 @@
 statuses: ✅ ⌛ ❌
 
 
-23. make request object ⌛
+24. test framework as isolated gem ✅
+
+23. make request object ✅
 
 22. add manipulations with the reseponse object:
   - headers["X-Test"] = "123" ✅

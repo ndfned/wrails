@@ -1,7 +1,6 @@
-require 'erb'
-require 'puma'
 require 'rack'
 
+require 'erb'
 require_relative 'wrails/routes'
 require_relative 'wrails/config'
 
@@ -172,6 +171,12 @@ module Wrails
   end
 
   def self.run!(port: 4567)
+    begin
+      require 'puma'
+    rescue LoadError
+      raise LoadError, "Wrails requires Puma to run the server. Add `gem 'puma'` to your Gemfile."
+    end
+
     server = Puma::Server.new(self)
     server.add_tcp_listener '127.0.0.1', port
 

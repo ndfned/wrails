@@ -1,26 +1,30 @@
-# Simple Ruby App
+# Wrails
 
-A basic Ruby application to get started with Ruby development.
+Rails but worse
 
-## Features
+---
 
-## Getting Started
+## Installation
 
-### Prerequisites
-
-- Ruby 3 or higher
-
-### Installation
+```ruby
+gem 'wrails'
+gem 'puma'
+```
 
 ```bash
-cd rubyprj
 bundle install
 ```
 
-### Running the App
-
-```bash
-ruby app.rb
-```
+---
 
 ## Usage
+
+```ruby
+require 'wrails'
+
+Wrails::Routes.get '/' do
+  'Home Page'
+end
+
+Wrails.run!
+```

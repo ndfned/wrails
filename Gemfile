@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'erb'
 gem 'puma'
 gem 'rack'
 
