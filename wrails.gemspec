@@ -3,6 +3,7 @@
 # - gem build wrails.gemspec
 # - gem install ./wrails-0.1.2.gem
 # - use it in another project: require 'wrails'
+# - do: bundle update wrails (if already installed)
 
 Gem::Specification.new do |spec|
   spec.name        = 'wrails'
