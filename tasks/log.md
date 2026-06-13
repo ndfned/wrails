@@ -1,6 +1,6 @@
 statuses: ✅ ⌛ ❌
 
-25. add request usage examples
+25. add request object access inside route ✅
 
 24. test framework as isolated gem ✅
 

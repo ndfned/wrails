@@ -1,8 +1,9 @@
 module Wrails
   class RouteContext
-    attr_reader :response
+    attr_reader :request, :response
 
-    def initialize(response)
+    def initialize(request, response)
+      @request = request
       @response = response
     end
 

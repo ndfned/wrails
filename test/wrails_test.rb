@@ -276,4 +276,13 @@ class WrailsTest < Minitest::Test
     assert_body 'ok', response
     assert_header_nil 'X-Test', response
   end
+
+  def test_request_object_is_available
+    Wrails::Routes.get '/info' do
+      request.path
+    end
+
+    response = get('/info')
+    assert_body '/info', response
+  end
 end

@@ -25,6 +25,20 @@ Wrails::Routes.get '/test/:name' do |params|
   "Hello #{params[:name]}!"
 end
 
+Wrails::Routes.get '/info' do |params|
+  content_type :json
+
+  {
+    method: request.request_method,
+    path: request.path,
+    host: request.host,
+    ip: request.ip,
+    user_agent: request.user_agent,
+    query: request.query_string,
+    params: params
+  }.to_json
+end
+
 Wrails::Routes.get '/not_found' do |params|
   if params[:name].nil?
     response.status = 404

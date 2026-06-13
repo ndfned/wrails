@@ -26,7 +26,7 @@ module Wrails
       return response
     end
 
-    context = RouteContext.new(response)
+    context = RouteContext.new(request, response)
     params = if request.params.nil?
                route[:params]
              else
