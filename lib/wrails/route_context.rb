@@ -1,3 +1,5 @@
+require 'erb'
+
 module Wrails
   class RouteContext
     attr_reader :request, :response

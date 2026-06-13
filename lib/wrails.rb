@@ -1,6 +1,5 @@
 require 'rack'
 
-require 'erb'
 require_relative 'wrails/config'
 require_relative 'wrails/request'
 require_relative 'wrails/response'
