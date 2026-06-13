@@ -1,12 +1,22 @@
 What needs to be done to use this app as a microframework?
 
 Macros:
-  - should include all essential features (TODO: list essentials somewhere)
-  - should be packaged as a gem
-  - gem should require no extra dependencies
-  - global refactoring after features done: app as a whole, how is it structured? (main learning point) (can be done later, after gem is packaged)
+  - should include all essential features (✅ done partially, list below of missing features)
+  - should be packaged as a gem (✅ done and tested)
+  - global refactoring after features done (✅ done)
+  - read actual microframework source code (e.g. Sinatra): compare, reflect, etc
 
 
+Missing features:
+  - before filters/hooks
+  - error handlers
+  - cookies
+  - sessions
+  - middlewares
+(probably gonna skip them for now and implement with full framework functionality)
+
+
+======================================================================
 Essential features (pseudocode):
 
 app = new MicroFramework()

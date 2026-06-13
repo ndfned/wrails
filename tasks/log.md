@@ -1,5 +1,6 @@
 statuses: ✅ ⌛ ❌
 
+25. add request usage examples
 
 24. test framework as isolated gem ✅
 

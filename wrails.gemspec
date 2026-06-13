@@ -1,6 +1,12 @@
+# Flow:
+# - update version
+# - gem build wrails.gemspec
+# - gem install ./wrails-0.1.2.gem
+# - use it in another project: require 'wrails'
+
 Gem::Specification.new do |spec|
   spec.name        = 'wrails'
-  spec.version     = '0.1.1'
+  spec.version     = '0.1.2'
   spec.summary     = 'Worse than Rails'
   spec.files       = Dir['lib/**/*.rb']
   spec.require_paths = ['lib']
