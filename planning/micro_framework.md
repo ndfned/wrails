@@ -5,7 +5,7 @@ Macros:
   - should be packaged as a gem (✅ done and tested)
   - global refactoring after features done (✅ done)
   - read actual microframework source code (e.g. Sinatra): compare, reflect, etc
-  - start thinking about transition into full framework (Rails like)
+  - start thinking about transition into full framework (Rails like) (✅ done, in a separate file)
 
 
 Missing features:
