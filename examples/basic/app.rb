@@ -1,11 +1,10 @@
-# ruby examples/basic.rb
+# ruby examples/basic/app.rb
 # open http://localhost:4567
 
 require 'byebug'
 require 'json'
 
-require_relative '../lib/wrails'
-require_relative '../lib/wrails/routes'
+require_relative '../../lib/wrails'
 
 Wrails::Config.views_path = 'examples/views'
 

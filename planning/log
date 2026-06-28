@@ -1,5 +1,8 @@
 statuses: ✅ ⌛ ❌
 
+26. implement basic mvc:
+  - split route and controller definition into separate files ⌛
+
 25. add request object access inside route ✅
 
 24. test framework as isolated gem ✅
