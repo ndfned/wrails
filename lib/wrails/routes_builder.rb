@@ -5,7 +5,7 @@ module Wrails
     end
 
     def get(path, to:)
-      router.add_route(:get, path, to)
+      @router.add_route(:get, path, to)
     end
   end
 end

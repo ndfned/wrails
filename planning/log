@@ -1,7 +1,8 @@
 statuses: ✅ ⌛ ❌
 
 26. implement basic mvc:
-  - split route and controller definition into separate files ⌛
+  - split routes and controller definition into separate files ⌛
+  - split logic into app (framework workflow should be done inside app instance)
 
 25. add request object access inside route ✅
 

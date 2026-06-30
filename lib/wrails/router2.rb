@@ -1,6 +1,8 @@
 module Wrails
   class Router2
-    @routes = { get: {}, post: {}, put: {}, patch: {}, delete: {} }
+    def initialize
+      @routes = { get: {}, post: {}, put: {}, patch: {}, delete: {} }
+    end
 
     def add_route(method, path, to)
       @routes[method][path] = to
@@ -11,11 +13,11 @@ module Wrails
     end
 
     def find_route(method, path)
-      @routes[method].each do |route_pattern, handler|
+      @routes[method].each do |route_pattern, target|
         if route_match?(route_pattern, path)
           return {
             path: path,
-            handler: handler,
+            target: target,
             params: parse_path_params(route_pattern, path)
           }
         end
