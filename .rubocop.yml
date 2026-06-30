@@ -12,3 +12,6 @@ Style/IfUnlessModifier:
 
 Style/GuardClause:
   Enabled: false
+
+Style/RedundantReturn:
+  AutoCorrect: false
