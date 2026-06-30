@@ -1,13 +1,41 @@
 require 'rack'
 
 require_relative 'wrails/config'
+require_relative 'wrails/controller'
 require_relative 'wrails/request'
 require_relative 'wrails/response'
 require_relative 'wrails/routes'
 require_relative 'wrails/router'
+require_relative 'wrails/router2'
 require_relative 'wrails/route_context'
+require_relative 'wrails/routes_builder'
 
 module Wrails
+  @router = nil
+
+  def self.draw_routes(&block)
+    @router |= Wrails::Router2.new
+    @router.draw(&block)
+  end
+
+  # def self.handle_request2(request)
+  #   raise 'unsupported' unless %i[get post put patch delete].include?(request.request_method)
+
+  #   route = @router.find_route(request.path, request.request_method)
+
+  #   response = Response.new(
+  #     status: 200,
+  #     body: nil,
+  #     headers: { 'Content-Type' => 'text/html' }
+  #   )
+
+  #   if route.nil?
+  #     response.status = 404
+  #     response.body = '<h1>Not Found</h1>'
+  #     response
+  #   end
+  # end
+
   def self.handle_request(request)
     raise 'unsupported' unless %i[get post put patch delete].include?(request.request_method)
 

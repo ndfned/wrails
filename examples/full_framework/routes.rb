@@ -1,3 +1,3 @@
-Wrails::Routes.draw do
+Wrails.draw_routes do
   get '/', to: 'home#index'
 end
