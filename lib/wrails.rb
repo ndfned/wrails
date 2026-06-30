@@ -50,7 +50,7 @@ module Wrails
     raise 'unsupported' unless %i[get post put patch delete].include?(request.request_method)
 
     route = router.find_route(request.request_method, request.path)
-    no_route_response if route.nil?
+    return no_route_response if route.nil?
 
     response.body = exec_action(route)
     raise 'invalid body value' unless response.body.is_a?(String) || response.body.nil?
