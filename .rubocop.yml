@@ -15,3 +15,6 @@ Style/GuardClause:
 
 Style/RedundantReturn:
   AutoCorrect: false
+
+Metrics/AbcSize:
+  Enabled: false
