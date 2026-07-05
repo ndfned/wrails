@@ -3,7 +3,7 @@ module Wrails
     attr_reader :router
 
     def initialize
-      @router = Router2.new
+      @router = Router.new
     end
 
     def call(env)

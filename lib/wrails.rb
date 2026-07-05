@@ -5,7 +5,7 @@ require_relative 'wrails/config'
 require_relative 'wrails/controller'
 require_relative 'wrails/request'
 require_relative 'wrails/response'
-require_relative 'wrails/router2'
+require_relative 'wrails/router'
 require_relative 'wrails/routes_builder'
 
 module Wrails
