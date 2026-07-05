@@ -1,5 +1,7 @@
 class HomeController < Wrails::Controller
   def index
-    'Home Page'
+    response.body = 'Home Page'
+
+    super
   end
 end

@@ -1,3 +1,3 @@
-Wrails.app.draw_routes do
+Wrails.app.router.draw do
   get '/', to: 'home#index'
 end

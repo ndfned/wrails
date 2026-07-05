@@ -4,12 +4,36 @@ module Wrails
       @routes = { get: {}, post: {}, put: {}, patch: {}, delete: {} }
     end
 
+    def dispatch(request)
+      route = find_route(request.request_method, request.path)
+      controller_class, action = resolve_controller(route)
+
+      controller_class.new(request).send(action)
+    end
+
     def add_route(method, path, to)
       @routes[method][path] = to
     end
 
     def draw(&block)
-      Wrails::RoutesBuilder.new(self).instance_exec(&block)
+      RoutesBuilder.new(self).instance_exec(&block)
+    end
+
+    private
+
+    # TODO: where this logic should be?
+    # def no_route_response
+    #   response.status = 404
+    #   response.body = '<h1>Not Found</h1>'
+
+    #   response
+    # end
+
+    def resolve_controller(route)
+      controller_name, action = route[:target].split('#')
+      controller_full_name = "#{controller_name.capitalize}Controller"
+      controller_class = Object.const_get(controller_full_name)
+      [controller_class, action]
     end
 
     def find_route(method, path)
@@ -25,8 +49,6 @@ module Wrails
 
       nil
     end
-
-    private
 
     def route_match?(path1, path2)
       segments1 = path1.split('/')
