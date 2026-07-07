@@ -11,7 +11,8 @@ module Wrails
       )
     end
 
-    def index
+    def dispatch(action)
+      send(action)
       @response
     end
   end

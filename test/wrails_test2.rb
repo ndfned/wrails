@@ -3,9 +3,6 @@ require_relative 'test_helper'
 class TestController < Wrails::Controller
   def index
     response.body = 'Home Page'
-
-    # TODO: how do i avoid calling super?
-    super
   end
 end
 

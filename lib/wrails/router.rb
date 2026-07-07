@@ -8,7 +8,7 @@ module Wrails
       route = find_route(request.request_method, request.path)
       controller_class, action = resolve_controller(route)
 
-      controller_class.new(request).send(action)
+      controller_class.new(request).dispatch(action)
     end
 
     def add_route(method, path, to)

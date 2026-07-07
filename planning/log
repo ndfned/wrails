@@ -3,6 +3,9 @@ statuses: ✅ ⌛ ❌
 26. implement basic mvc:
   - split routes and controller definition into separate files ✅
   - split logic into app (framework workflow should be done inside app instance) ✅
+  - execute controller methods inside context?
+  - controller should render a template (VIEW)
+  - model basics?
 
 25. add request object access inside route ✅
 
