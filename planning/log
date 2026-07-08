@@ -1,10 +1,12 @@
 statuses: ✅ ⌛ ❌
 
+27. move config inside app
+
 26. implement basic mvc:
   - split routes and controller definition into separate files ✅
   - split logic into app (framework workflow should be done inside app instance) ✅
+  - controller should render a template (VIEW) ✅
   - execute controller methods inside context?
-  - controller should render a template (VIEW)
   - model basics?
 
 25. add request object access inside route ✅
