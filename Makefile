@@ -5,7 +5,7 @@ test:
 testx:
 	ruby test/wrails_test.rb -n $(TEST)
 
-example:
+showcase:
 	ruby examples/full_framework/app.rb
 
 .PHONY: test

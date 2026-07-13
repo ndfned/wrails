@@ -3,3 +3,4 @@
 .bundle
 .ruby-version
 .byebug_history
+*.db
