@@ -3,7 +3,8 @@ to full framework (Rails like)?
 
 
 At what point does it qualify as a full framework?
-I dont think there is a particular line, but minimal features required:
+Not sure if there is a line where u can say 'NOW its a full framework'.
+So going to start with minimal set of essential features:
 - project structure (directories, files, configs)
 - mvc
 - ORM
