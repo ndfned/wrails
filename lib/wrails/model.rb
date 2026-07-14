@@ -2,13 +2,20 @@ module Wrails
   class Model
     class << self
       def all
-        DB.execute('SELECT * FROM messages')
+        DB.execute("SELECT * FROM #{table_name}")
       end
 
       def create(**params)
+        insert_columns = columns - [:id]
+        values = insert_columns.map do |column|
+          column == :created_at ? Time.now.iso8601 : params[column]
+        end
+
+        placeholders = (['?'] * insert_columns.size).join(', ')
+
         DB.execute(
-          'INSERT INTO messages (text, created_at) VALUES (?, ?)',
-          [params[:text], Time.now.iso8601]
+          "INSERT INTO #{table_name} (#{insert_columns.join(', ')}) VALUES (#{placeholders})",
+          values
         )
       end
     end

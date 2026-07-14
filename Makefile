@@ -1,5 +1,5 @@
 test:
-	ruby test/wrails_test2.rb
+	ruby test/run_all.rb
 
 # make testx TEST=test_post_request
 testx:

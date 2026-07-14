@@ -23,6 +23,13 @@ DB.execute <<~SQL
 SQL
 
 class Message < Wrails::Model
+  def self.table_name
+    'messages'
+  end
+
+  def self.columns
+    %i[id text created_at]
+  end
 end
 
 Wrails.run!
